@@ -1,15 +1,37 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useState } from 'react';
 
 export default function Home() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
 
-  const submit = () => {
-    alert("fom")
+  const submit = async () => {
+   
+    const data = {
+      password,
+      email
+    }
+    alert(JSON.stringify(data, null, 4))
+    
+    const url = "http://localhost:4001/register"
+
+    const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
   }
+
+  const handleChange = event => {
+    setMessage(event.target.value);
+  };
 
   return (
     <>
@@ -22,19 +44,39 @@ export default function Home() {
       <div className={styles.main}>
         <div className={styles.form}>
           <div className={styles.inputContainer}>
-            <label className={styles.label} for="email">Email</label>
-            <input className={styles.input} type="email" id="email" name="email" />
+            <label className={styles.label} htmlFor="email">Email</label>
+            <input
+              className={styles.input}
+              type="email"
+              id="email"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email} />
           </div>
           <div className={styles.inputContainer}>
-            <label className={styles.label} for="password">Senha</label>
-            <input className={styles.input} v type="password" id="password" name="password" />
+            <label className={styles.label} htmlFor="password">Senha</label>
+            <input
+              className={styles.input}
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div className={styles.inputContainer}>
-            <label className={styles.label} for="confirmPassword">Repita a Senha</label>
-            <input className={styles.input} type="confirmPassword" id="confirmPassword" name="confirmPassword" />
+            <label className={styles.label} htmlFor="confirmPassword">Repita a Senha</label>
+            <input
+              className={styles.input}
+              type="confirmPassword"
+              id="confirmPassword"
+              name="confirmPassword"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
+            />
           </div>
           <div className={styles.inputContainer}>
-            <button className={styles.button} onClick={submit}>Cadastrar</button>
+            <button disabled={confirmPassword != password ? true : false} className={styles.button} onClick={submit}>Cadastrar</button>
           </div>
         </div>
       </div>
