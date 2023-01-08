@@ -9,12 +9,12 @@ import { SignUp } from '../../services/apiCalls'
 import styles from '../../styles/Register.module.css'
 
 export const getServerSideProps = async (ctx) => {
-  const ticketId = `${ctx.query["ticket"]}`
+  const ticket = `${ctx.query["ticket"]}`
 
-  return { props: { ticketId } }
+  return { props: { ticket } }
 }
 
-export default function Register({ ticketId }) {
+export default function Register({ ticket }) {
   const router = useRouter()
 
   const [email, setEmail] = useState("")
@@ -32,7 +32,7 @@ export default function Register({ ticketId }) {
 
     try {
       const response = await SignUp(data)
-      router.push('/?ticketId=' + ticketId)
+      router.push('/?ticket=' + ticket)
     } catch (error) {
       console.log(error)
       setErrorMessage(error.response.data.error)

@@ -9,12 +9,12 @@ import { SignIn } from '../../services/apiCalls'
 import styles from '../../styles/Login.module.css'
 
 export const getServerSideProps = async (ctx) => {
-  const ticketId = `${ctx.query["ticket"]}`
+  const ticket = `${ctx.query["ticket"]}`
 
-  return { props: { ticketId } }
+  return { props: { ticket } }
 }
 
-export default function Login({ ticketId }) {
+export default function Login({ ticket }) {
   const router = useRouter()
 
   const [email, setEmail] = useState("")
@@ -30,7 +30,7 @@ export default function Login({ ticketId }) {
 
     try {
       const response = await SignIn(data)
-      router.push('/?ticketId=' + ticketId)
+      router.push('/?ticket=' + ticket)
     } catch (error) {
       console.log(error)
       setErrorMessage(error.response.data.error)

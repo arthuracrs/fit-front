@@ -6,12 +6,12 @@ import { Validate, useTicket } from '../services/apiCalls'
 
 export const getServerSideProps = async (ctx) => {
   const { nextAuthToken } = parseCookies(ctx)
-  const ticketId = `${ctx.query["ticket"]}`
+  const ticket = `${ctx.query["ticket"]}`
 
   if (!nextAuthToken) {
     return {
       redirect: {
-        destination: '/register',
+        destination: '/register?ticket=' + ticket,
         permanent: false
       }
     }
@@ -22,7 +22,7 @@ export const getServerSideProps = async (ctx) => {
   } catch (error) {
     return {
       redirect: {
-        destination: '/register',
+        destination: '/register/?ticket=' + ticket,
         permanent: false
       }
     }
@@ -30,7 +30,7 @@ export const getServerSideProps = async (ctx) => {
 
   try {
     const ticketId = `${ctx.query["ticket"]}`
-    console.log('ticketId: '+ ticketId)
+    console.log('ticketId: ' + ticketId)
     const useTicketResponse = await useTicket(nextAuthToken, { ticketId })
 
     return { props: { ticketId } }
