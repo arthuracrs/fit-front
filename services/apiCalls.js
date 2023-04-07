@@ -1,10 +1,9 @@
 import axios from "axios";
 import { setCookie } from "nookies";
 
-
 // const loginServiceUrl = 'http://localhost:4001'
-const loginServiceUrl = 'http://meuloru.com:3001'
-const backendUrl = 'http://meuloru.com:3000'
+const loginServiceUrl = process.env.AUTH_SERVICE_URL
+const backendUrl = process.env.BACKEND_URL
 
 export const Validate = async (token) => {
     const responseBody = (await axios.post(`${loginServiceUrl}/validate`, {}, {

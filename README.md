@@ -1,3 +1,23 @@
+# fit-front
+When compiling image:
+- if buildx is not enable:
+```
+docker buildx create --use
+```
+# Build image and push to Docker Hub (arm/x86):
+```
+docker buildx build --platform linux/amd64,linux/arm64 -t arthuracrs/fit-front:1.0.0 . --push
+```
+**Attention:** Please update the image version before build.
+
+
+### To update while running (on k8s):
+```
+kubectl set image deployment/hello-deployment hello-container=arthuracrs/hello:1.0.2
+```
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
